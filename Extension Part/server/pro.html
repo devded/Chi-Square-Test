@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="alertifyjs/css/alertify.css">
+	<link rel="stylesheet" type="text/css" href="alertifyjs/css/themes/default.css">
+
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="alertifyjs/alertify.js"></script>
+		
+
+    </head>
+    <body>
+					
+			<input type="text" name="text" id="inputObserved"/>
+		
+			<input type="text" name="text" id="inputExpected"/>
+	
+			<button onclick="pushData();">Show</button>
+		
+		
+		<table id="example" border="1px" style="width:80%">
+		<thead>
+			 <tr>
+				<th>Observed Data</th>
+				<th>Expected Data</th> 
+			 </tr>
+		</thead>
+		<tbody>	 
+			 <tr>
+				<td id="odata"> </td>
+				<td id="edata"> </td>
+			 </tr>
+		</tbody>	 
+		</table>
+        
+        <input type="text" name="text" id="inputSignificantChi"/>
+        <p id="sum"></p>
+		
+		<button onclick="chiCheck();">Check</button>
+        <!-- <p id="mcg"></p> -->
+		
+		
+		
+        <script>
+            
+            // create an array
+            var observed = new Array();
+			var expected = new Array();
+			var temporary = new Array();
+            
+            function pushData()
+            {
+                // get value from the input text
+                var inputObserved = parseFloat(document.getElementById('inputObserved').value,10);
+				
+				var inputExpected = parseFloat(document.getElementById('inputExpected').value,10);
+                
+                // append data to the array
+               observed.push(inputObserved);
+			   
+			   expected.push(inputExpected);
+			   
+				
+                //clear textfield after submit value
+				 document.getElementById('inputObserved').value="";
+				  document.getElementById('inputExpected').value="";
+				 
+                var oval = "";
+				var eval = "";
+                
+                for(i = 0; i < observed.length; i++)
+                {
+                   oval = oval + observed[i] + "<br/>";
+				   eval = eval + expected[i] + "<br/>";
+                }
+				
+				
+				
+				
+                // display array data
+                document.getElementById('odata').innerHTML = oval;
+				
+				document.getElementById('edata').innerHTML = eval;
+            }
+			
+			
+			function sum(){
+				var sum = 0;
+				for(i = 0; i < observed.length; i++)
+				{
+                  sum = sum + observed[i];
+                }
+				
+				document.getElementById('sum').innerHTML = sum;
+			}
+			
+			function chiCheck(){
+				var observedChi = 0;
+				for(i = 0; i < observed.length; i++)
+				{
+                  temporary[i] = observed[i] - expected[i];
+				  temporary[i] = temporary[i] * temporary[i];
+				  temporary[i] = temporary[i] / expected[i];
+				  observedChi = observedChi + temporary[i];
+				  
+                }
+				document.getElementById('sum').innerHTML = observedChi;
+				var significantChi = parseFloat(document.getElementById('inputSignificantChi').value,10);
+				
+				var mcg;
+				
+				if( observedChi < significantChi ){
+				
+					alertify.success("Success");
+				}
+				else{
+					alertify.error("Error Happend");
+				}
+				
+			}
+			
+			function showtable(){
+			for(i = 0; i < observed.length; i++)
+				{
+			
+                 document.getElementById('odata').innerHTML = observed[i];
+				 document.getElementById('edata').innerHTML = expected[i];
+				 
+				 
+                }
+				
+				
+			
+			}
+            
+        </script>
+
+    </body>
+</html>
+
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

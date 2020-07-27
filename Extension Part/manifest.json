@@ -1,0 +1,17 @@
+
+{
+	"manifest_version": 2,
+	"version": "1.0.0",
+	"name": "Chi Square Test",
+	"description": "A chi-squared test, also written as χ2 test, is any statistical hypothesis test where the sampling ..... The Chi-square Test of Goodness of Fit",
+	"icons": {
+		"16": "images/icon16.png",
+		"32": "images/icon32.png",
+		"48": "images/icon48.png",
+		"128": "images/icon128.png"
+		},
+	"browser_action": {
+		"default_popup": "popup.html"
+	},
+	"permissions": ["storage"]
+}
